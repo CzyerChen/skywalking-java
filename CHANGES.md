@@ -13,6 +13,7 @@ Release Notes.
 * Support for HttpExchange request tracing.
 * Support tracing for async producing, batch sync consuming, and batch async consuming in rocketMQ-client-java-5.x-plugin.
 * Convert the Redisson span into an async span.
+* Support for ActiveMQ-Artemis messaging tracing.
 
 #### Documentation
 
