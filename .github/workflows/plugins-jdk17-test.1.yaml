@@ -60,6 +60,7 @@ jobs:
           - gateway-4.x-scenario
           - httpexchange-scenario
           - activemq-artemis-2.x-scenario
+          - c3p0-0.9.5.x-scenario
     steps:
       - uses: actions/checkout@v2
         with:
