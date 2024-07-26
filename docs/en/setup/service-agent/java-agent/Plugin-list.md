@@ -54,6 +54,7 @@
 - jetty-client-9.x
 - jetty-server-9.x
 - kafka-0.11.x/1.x/2.x
+- kafka-3.7.x
 - kotlin-coroutine
 - lettuce-5.x
 - light4j
@@ -177,3 +178,4 @@
 - spring-webflux-6.x-webclient
 - activemq-artemis-jakarta-client-2.x
 - c3p0-0.9.x
+- solon-2.x
