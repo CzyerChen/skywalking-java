@@ -34,7 +34,6 @@ import org.apache.skywalking.apm.agent.core.plugin.interceptor.enhance.v2.Instan
 import org.apache.skywalking.apm.agent.core.plugin.interceptor.enhance.v2.MethodInvocationContext;
 import org.apache.skywalking.apm.network.trace.component.ComponentsDefine;
 import org.apache.skywalking.apm.plugin.redisson.v3.util.ClassUtil;
-import org.apache.skywalking.apm.util.StringUtil;
 import org.redisson.client.RedisClient;
 import org.redisson.client.RedisConnection;
 import org.redisson.client.protocol.CommandData;
@@ -49,8 +48,6 @@ public class RedisConnectionMethodInterceptor implements InstanceMethodsAroundIn
     private static final ILog LOGGER = LogManager.getLogger(RedisConnectionMethodInterceptor.class);
 
     private static final String ABBR = "...";
-    private static final String QUESTION_MARK = "?";
-    private static final String DELIMITER_SPACE = " ";
     public static final Object STOP_SPAN_FLAG = new Object();
 
     @Override
@@ -74,7 +71,7 @@ public class RedisConnectionMethodInterceptor implements InstanceMethodsAroundIn
             }
         } else if (allArguments[0] instanceof CommandData) {
             CommandData commandData = (CommandData) allArguments[0];
-            command = commandData.getCommand().getName();
+            command = Objects.isNull(commandData.getCommand().getSubName()) ? commandData.getCommand().getName() : String.join(" ", commandData.getCommand().getName(), commandData.getCommand().getSubName());
             if ("PING".equals(command) && !RedissonPluginConfig.Plugin.Redisson.SHOW_PING_COMMAND) {
                 return;
             } else {
@@ -144,7 +141,10 @@ public class RedisConnectionMethodInterceptor implements InstanceMethodsAroundIn
         if (!(argument instanceof String)) {
             return Optional.empty();
         }
-        return Optional.of(StringUtil.cut((String) argument, RedissonPluginConfig.Plugin.Redisson.REDIS_PARAMETER_MAX_LENGTH));
+        if (((String) argument).length() <= RedissonPluginConfig.Plugin.Redisson.REDIS_PARAMETER_MAX_LENGTH) {
+            return Optional.of((String) argument);
+        }
+        return Optional.of(((String) argument).substring(0, RedissonPluginConfig.Plugin.Redisson.REDIS_PARAMETER_MAX_LENGTH) + ABBR);
     }
 
     private Optional<String> parseOperation(String cmd) {

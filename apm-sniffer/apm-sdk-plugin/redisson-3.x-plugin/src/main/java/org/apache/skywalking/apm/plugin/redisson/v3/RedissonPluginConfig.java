@@ -116,7 +116,20 @@ public class RedissonPluginConfig {
                     "xadd",
                     "xdel",
                     "del",
-                    "xtrim"
+                    "xtrim",
+                    "ft.create",
+                    "ft.dropindex",
+                    "ft.aliasadd",
+                    "ft.aliasupdate",
+                    "ft.aliasdel",
+                    "ft.dictadd",
+                    "ft.dictdel",
+                    "ft.dictdump",
+                    "ft.alter",
+                    "ft.config set",
+                    "ft.cursor del",
+                    "ft.syndump",
+                    "ft.synupdate"
             ));
             /**
              * Operation represent a cache span is "write" or "read" action , and "op"(operation) is tagged with key "cache.op" usually
@@ -158,7 +171,13 @@ public class RedissonPluginConfig {
                     "xread",
                     "xlen",
                     "xrange",
-                    "xrevrange"
+                    "xrevrange",
+                    "ft.info",
+                    "ft.aggregate",
+                    "ft.config get",
+                    "ft.cursor read",
+                    "ft.search",
+                    "ft.spellcheck"
             ));
         }
     }
